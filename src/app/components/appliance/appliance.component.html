@@ -1,1 +1,72 @@
-<p>appliance works!</p>
+@if (applianceList$ | async; as appliances) {
+    <div class="card card-block">  
+        <clr-datagrid>
+            <clr-dg-column>ID</clr-dg-column>
+            <clr-dg-column>Model</clr-dg-column>
+            <clr-dg-column>Manufacturer</clr-dg-column>
+            <clr-dg-column>Type</clr-dg-column>
+            <clr-dg-column>S/N</clr-dg-column>
+            <clr-dg-column>Status</clr-dg-column>
+    
+            <clr-dg-row *clrDgItems="let appliance of appliances" [clrDgItem]="appliance" [clrDgDetailOpenLabel]="'Open details for ' + appliance.id" [clrDgDetailCloseLabel]="'Close details for' + appliance.id">
+                <clr-dg-cell>{{ appliance.id }}</clr-dg-cell>
+                <clr-dg-cell>{{ appliance.model }}</clr-dg-cell>
+                <clr-dg-cell>{{ appliance.manufacturer }}</clr-dg-cell>
+                <clr-dg-cell>{{ appliance.type }}</clr-dg-cell>
+                <clr-dg-cell>{{ appliance.serialNumber }}</clr-dg-cell>
+                <clr-dg-cell>
+                    <span [class]="getStatusClass(appliance.repairStatus)">{{appliance.repairStatus}}</span>         
+                </clr-dg-cell>
+            </clr-dg-row>
+    
+            <ng-template [(clrIfDetail)]="detailGridState" let-detail>
+                <clr-dg-detail>
+                <clr-dg-detail-header>{{ detail.name }}</clr-dg-detail-header>
+                <clr-dg-detail-body>
+                    <b cds-text="medium">Additional Details</b>
+                    <!--        <table class="table">-->
+                    <!--          <tr>-->
+                    <!--            <th>Property</th>-->
+                    <!--            <th>Value</th>-->
+                    <!--          </tr>-->
+                    <!--          <tr>-->
+                    <!--            <td>ID</td>-->
+                    <!--            <td>{{ detail.id }}</td>-->
+                    <!--          </tr>-->
+                    <!--          <tr>-->
+                    <!--            <td>Wins</td>-->
+                    <!--            <td>{{ detail.wins }}</td>-->
+                    <!--          </tr>-->
+                    <!--          <tr>-->
+                    <!--            <td>Favorite Color</td>-->
+                    <!--            <td>-->
+                    <!--              {{ detail.color }}-->
+                    <!--              <span class="color-square" [style.backgroundColor]="detail.color"></span>-->
+                    <!--            </td>-->
+                    <!--          </tr>-->
+                    <!--          <tr>-->
+                    <!--            <td>Creation</td>-->
+                    <!--            <td>{{ detail.creation | date }}</td>-->
+                    <!--          </tr>-->
+                    <!--        </table>-->
+                </clr-dg-detail-body>
+                </clr-dg-detail>
+            </ng-template>
+    
+            <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">Appliances per page</clr-dg-page-size>
+                    {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+                    {{ pagination.totalItems }} users
+            </clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
+    </div>
+    } @else {
+      <h2>No data yet...</h2>
+    }
+  
+  
+  
+  
+  
