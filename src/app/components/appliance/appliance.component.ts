@@ -1,16 +1,19 @@
 import {ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {ClrDatagridModule} from "@clr/angular";
+import {ClrDatagridModule, ClrSidePanelModule} from "@clr/angular";
 import {ApplianceService} from "../../services/appliance.service";
 import {AsyncPipe} from "@angular/common";
-import { ApplianceStatus } from '../../interfaces/appliance.interface';
+import { ApplianceStatus, IAppliance } from '../../interfaces/appliance.interface';
+import { ApplianceSidebarComponent } from "./appliance-sidebar/appliance-sidebar.component";
 
 @Component({
   selector: 'app-appliance',
   standalone: true,
   imports: [
     ClrDatagridModule,
-    AsyncPipe
-  ],
+    ClrSidePanelModule,
+    AsyncPipe,
+    ApplianceSidebarComponent
+],
   templateUrl: './appliance.component.html',
   styleUrl: './appliance.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -22,11 +25,16 @@ export class ApplianceComponent implements OnInit, OnDestroy {
   applianceStatuses = Object.values(ApplianceStatus);
 
   applianceList$ = this.applianceService.appliance$
-  detailGridState: any;
+  sidePanelOpened: boolean = false;
 
 
   ngOnInit(): void {
     console.log('Method implemented.');
+  }
+
+  showSidePanel(appliance: IAppliance) {
+    console.log(appliance);
+    this.sidePanelOpened = !this.sidePanelOpened;
   }
 
 

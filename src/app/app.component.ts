@@ -14,7 +14,6 @@ import {ClarityModule} from "@clr/angular";
 })
 export class AppComponent {
   title = 'appliance-manager-tool';
-  // navbarIsCollapsed = model(true);
   navbarIsCollapsed: boolean = true;
 
 

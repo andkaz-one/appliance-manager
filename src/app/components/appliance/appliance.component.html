@@ -7,51 +7,22 @@
             <clr-dg-column>Type</clr-dg-column>
             <clr-dg-column>S/N</clr-dg-column>
             <clr-dg-column>Status</clr-dg-column>
+            <clr-dg-column>Actions</clr-dg-column>
     
             <clr-dg-row *clrDgItems="let appliance of appliances" [clrDgItem]="appliance" [clrDgDetailOpenLabel]="'Open details for ' + appliance.id" [clrDgDetailCloseLabel]="'Close details for' + appliance.id">
                 <clr-dg-cell>{{ appliance.id }}</clr-dg-cell>
                 <clr-dg-cell>{{ appliance.model }}</clr-dg-cell>
                 <clr-dg-cell>{{ appliance.manufacturer }}</clr-dg-cell>
                 <clr-dg-cell>{{ appliance.type }}</clr-dg-cell>
-                <clr-dg-cell>{{ appliance.serialNumber }}</clr-dg-cell>
+                <clr-dg-cell>{{ appliance.serialNumber }}</clr-dg-cell>                
                 <clr-dg-cell>
                     <span [class]="getStatusClass(appliance.repairStatus)">{{appliance.repairStatus}}</span>         
                 </clr-dg-cell>
-            </clr-dg-row>
-    
-            <ng-template [(clrIfDetail)]="detailGridState" let-detail>
-                <clr-dg-detail>
-                <clr-dg-detail-header>{{ detail.name }}</clr-dg-detail-header>
-                <clr-dg-detail-body>
-                    <b cds-text="medium">Additional Details</b>
-                    <!--        <table class="table">-->
-                    <!--          <tr>-->
-                    <!--            <th>Property</th>-->
-                    <!--            <th>Value</th>-->
-                    <!--          </tr>-->
-                    <!--          <tr>-->
-                    <!--            <td>ID</td>-->
-                    <!--            <td>{{ detail.id }}</td>-->
-                    <!--          </tr>-->
-                    <!--          <tr>-->
-                    <!--            <td>Wins</td>-->
-                    <!--            <td>{{ detail.wins }}</td>-->
-                    <!--          </tr>-->
-                    <!--          <tr>-->
-                    <!--            <td>Favorite Color</td>-->
-                    <!--            <td>-->
-                    <!--              {{ detail.color }}-->
-                    <!--              <span class="color-square" [style.backgroundColor]="detail.color"></span>-->
-                    <!--            </td>-->
-                    <!--          </tr>-->
-                    <!--          <tr>-->
-                    <!--            <td>Creation</td>-->
-                    <!--            <td>{{ detail.creation | date }}</td>-->
-                    <!--          </tr>-->
-                    <!--        </table>-->
-                </clr-dg-detail-body>
-                </clr-dg-detail>
-            </ng-template>
+                <clr-dg-cell>
+                    <button class="btn btn-sm" (click)="showSidePanel(appliance)">Info</button>
+                </clr-dg-cell>
+            </clr-dg-row>  
+           
     
             <clr-dg-footer>
             <clr-dg-pagination #pagination [clrDgPageSize]="10">
@@ -65,7 +36,20 @@
     } @else {
       <h2>No data yet...</h2>
     }
-  
+        
+    <clr-side-panel [(clrSidePanelOpen)]="sidePanelOpened" [clrSidePanelSize]="'lg'">
+        <div class="side-panel-title">Panel</div>
+        <div class="side-panel-body">
+            <app-appliance-sidebar></app-appliance-sidebar>
+        </div>
+        <div class="side-panel-footer">
+          <button type="button" class="btn btn-primary" (click)="sidePanelOpened = false">Ok</button>
+        </div>
+      </clr-side-panel>
+    
+   
+
+
   
   
   
